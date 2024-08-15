@@ -1,0 +1,20 @@
+USE pandemic;
+
+DROP FUNCTION IF EXISTS year_difference_from_current;
+
+DELIMITER $$
+
+CREATE FUNCTION year_difference_from_current(year_input INT)
+RETURNS INT
+DETERMINISTIC
+BEGIN
+    DECLARE start_of_year DATE;
+    DECLARE year_diff INT;
+
+    SET start_of_year = CONCAT(year_input, '-01-01');
+    SET year_diff = TIMESTAMPDIFF(YEAR, start_of_year, CURDATE());
+
+    RETURN year_diff;
+END$$
+
+DELIMITER ;
